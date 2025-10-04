@@ -14,14 +14,15 @@ export default function Home() {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  const fetchTodos = async () => {
-    if (!user) return;
-    const res = await fetch("/api/todos");
-    const data = await res.json();
-    setTodos(data);
-  };
-
   useEffect(() => {
+    if (!user) return;
+
+    const fetchTodos = async () => {
+      const res = await fetch("/api/todos");
+      const data = await res.json();
+      setTodos(data);
+    };
+
     fetchTodos();
   }, [user]);
 
@@ -36,7 +37,11 @@ export default function Home() {
     });
 
     setInput("");
-    fetchTodos();
+
+    // Refresh todos after adding
+    const res = await fetch("/api/todos");
+    const data = await res.json();
+    setTodos(data);
   };
 
   return (
@@ -45,7 +50,9 @@ export default function Home() {
 
       <SignedOut>
         <SignInButton>
-          <button className="bg-white text-[#400F09] px-4 py-2 rounded">Sign In</button>
+          <button className="bg-white text-[#400F09] px-4 py-2 rounded">
+            Sign In
+          </button>
         </SignInButton>
       </SignedOut>
 
@@ -75,7 +82,9 @@ export default function Home() {
                 key={todo.id}
                 className="flex justify-between items-center mb-2 bg-white text-[#400F09] px-4 py-2 rounded"
               >
-                <span className={todo.completed ? "line-through" : ""}>{todo.text}</span>
+                <span className={todo.completed ? "line-through" : ""}>
+                  {todo.text}
+                </span>
               </li>
             ))}
           </ul>

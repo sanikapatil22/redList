@@ -44,3 +44,19 @@ next-env.d.ts
 
 # clerk configuration (can include secrets)
 /.clerk/
+
+
+
+# Ignore Prisma generated client
+/app/generated/prisma/
+{
+  "overrides": [
+    {
+      "files": ["app/generated/prisma/**/*.ts", "app/generated/prisma/**/*.js"],
+      "rules": {
+        "@typescript-eslint/no-unused-expressions": "off",
+        "@typescript-eslint/no-this-alias": "off"
+      }
+    }
+  ]
+}
