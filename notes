@@ -1,0 +1,9 @@
+schema.prisma → Defines DB structure.
+
+npx prisma migrate dev → Actually builds/updates DB tables.
+
+lib/prisma.ts → Provides the Prisma client instance to query the DB.
+
+app/api/users/route.ts → Uses Prisma to read/write from DB, exposes it as HTTP API endpoints (/api/users).
+
+app/page.tsx → React component that calls the API, manages state, and displays data to the user.

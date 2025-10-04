@@ -98,12 +98,12 @@ exports.Prisma.UserScalarFieldEnum = {
   name: 'name'
 };
 
-exports.Prisma.PostScalarFieldEnum = {
+exports.Prisma.TodoScalarFieldEnum = {
   id: 'id',
-  title: 'title',
-  content: 'content',
-  published: 'published',
-  authorId: 'authorId'
+  text: 'text',
+  completed: 'completed',
+  createdAt: 'createdAt',
+  userId: 'userId'
 };
 
 exports.Prisma.SortOrder = {
@@ -124,7 +124,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Post: 'Post'
+  Todo: 'Todo'
 };
 /**
  * Create the Client
@@ -173,13 +173,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n// model User {\n//   id    Int     @id @default(autoincrement())\n//   email String  @unique\n//   name  String?\n//   posts Post[]\n// }\nmodel User {\n  id    Int     @id @default(autoincrement())\n  email String? @unique\n  name  String?\n  posts Post[]\n}\n\nmodel Post {\n  id        Int     @id @default(autoincrement())\n  title     String\n  content   String?\n  published Boolean @default(false)\n  authorId  Int\n  author    User    @relation(fields: [authorId], references: [id])\n}\n",
-  "inlineSchemaHash": "c39caf680c8b9815347798a00cec516e833e650902c09f6465e1ca88e70485bf",
+  "inlineSchema": "// generator client {\n//   provider = \"prisma-client-js\"\n//   output   = \"../app/generated/prisma\"\n// }\n\n// datasource db {\n//   provider = \"postgresql\"\n//   url      = env(\"DATABASE_URL\")\n// }\n\n// // model User {\n// //   id    Int     @id @default(autoincrement())\n// //   email String  @unique\n// //   name  String?\n// //   posts Post[]\n// // }\n// model User {\n//   id    Int     @id @default(autoincrement())\n//   email String? @unique\n//   name  String?\n//   posts Post[]\n// }\n\n// model Post {\n//   id        Int     @id @default(autoincrement())\n//   title     String\n//   content   String?\n//   published Boolean @default(false)\n//   authorId  Int\n//   author    User    @relation(fields: [authorId], references: [id])\n// }\n\n// // model Todo {\n// //   id        Int      @id @default(autoincrement())\n// //   text      String\n// //   completed Boolean  @default(false)   // new field\n// //   createdAt DateTime @default(now())\n// // }\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id    Int     @id @default(autoincrement())\n  email String? @unique\n  name  String?\n  todos Todo[]\n}\n\nmodel Todo {\n  id        Int      @id @default(autoincrement())\n  text      String // the task description\n  completed Boolean  @default(false)\n  createdAt DateTime @default(now())\n  userId    Int?\n  user      User?    @relation(fields: [userId], references: [id])\n}\n",
+  "inlineSchemaHash": "724ebf640c57b8279415f41d0cfbfaea8d075aae750a5a9583c159706f88cd57",
   "copyEngine": false
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"posts\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"PostToUser\"}],\"dbName\":null},\"Post\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"published\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"authorId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"author\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"PostToUser\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"todos\",\"kind\":\"object\",\"type\":\"Todo\",\"relationName\":\"TodoToUser\"}],\"dbName\":null},\"Todo\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"text\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"completed\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"TodoToUser\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = undefined
 config.compilerWasm = undefined

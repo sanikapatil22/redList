@@ -1,3 +1,42 @@
+// generator client {
+//   provider = "prisma-client-js"
+//   output   = "../app/generated/prisma"
+// }
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+// // model User {
+// //   id    Int     @id @default(autoincrement())
+// //   email String  @unique
+// //   name  String?
+// //   posts Post[]
+// // }
+// model User {
+//   id    Int     @id @default(autoincrement())
+//   email String? @unique
+//   name  String?
+//   posts Post[]
+// }
+
+// model Post {
+//   id        Int     @id @default(autoincrement())
+//   title     String
+//   content   String?
+//   published Boolean @default(false)
+//   authorId  Int
+//   author    User    @relation(fields: [authorId], references: [id])
+// }
+
+// // model Todo {
+// //   id        Int      @id @default(autoincrement())
+// //   text      String
+// //   completed Boolean  @default(false)   // new field
+// //   createdAt DateTime @default(now())
+// // }
+
 generator client {
   provider = "prisma-client-js"
   output   = "../app/generated/prisma"
@@ -8,24 +47,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model User {
-//   id    Int     @id @default(autoincrement())
-//   email String  @unique
-//   name  String?
-//   posts Post[]
-// }
 model User {
   id    Int     @id @default(autoincrement())
   email String? @unique
   name  String?
-  posts Post[]
+  todos Todo[]
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  authorId  Int
-  author    User    @relation(fields: [authorId], references: [id])
+model Todo {
+  id        Int      @id @default(autoincrement())
+  text      String // the task description
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+  userId    Int?
+  user      User?    @relation(fields: [userId], references: [id])
 }
