@@ -1,3 +1,76 @@
+// // // generator client {
+// // //   provider = "prisma-client-js"
+// // //   output   = "../app/generated/prisma"
+// // // }
+
+// // // datasource db {
+// // //   provider = "postgresql"
+// // //   url      = env("DATABASE_URL")
+// // // }
+
+// // // // model User {
+// // // //   id    Int     @id @default(autoincrement())
+// // // //   email String  @unique
+// // // //   name  String?
+// // // //   posts Post[]
+// // // // }
+// // // model User {
+// // //   id    Int     @id @default(autoincrement())
+// // //   email String? @unique
+// // //   name  String?
+// // //   posts Post[]
+// // // }
+
+
+// // // model Post {
+// // //   id        Int     @id @default(autoincrement())
+// // //   title     String
+// // //   content   String?
+// // //   published Boolean @default(false)
+// // //   authorId  Int
+// // //   author    User    @relation(fields: [authorId], references: [id])
+// // // }
+
+// // // // model Todo {
+// // // //   id        Int      @id @default(autoincrement())
+// // // //   text      String
+// // // //   completed Boolean  @default(false)   // new field
+// // // //   createdAt DateTime @default(now())
+// // // // }
+
+
+
+
+
+
+// // generator client {
+// //   provider = "prisma-client-js"
+// //   output   = "../app/generated/prisma"
+// // }
+
+// // datasource db {
+// //   provider = "postgresql"
+// //   url      = env("DATABASE_URL")
+// // }
+
+// // model User {
+// //   id    Int     @id @default(autoincrement())
+// //   email String? @unique
+// //   name  String?
+// //   todos Todo[]
+// // }
+
+// // model Todo {
+// //   id        Int      @id @default(autoincrement())
+// //   text      String   // the task description
+// //   completed Boolean  @default(false)
+// //   createdAt DateTime @default(now())
+// //   userId    Int?
+// //   user      User?    @relation(fields: [userId], references: [id])
+// // }
+
+
+
 // generator client {
 //   provider = "prisma-client-js"
 //   output   = "../app/generated/prisma"
@@ -8,35 +81,29 @@
 //   url      = env("DATABASE_URL")
 // }
 
-// // model User {
-// //   id    Int     @id @default(autoincrement())
-// //   email String  @unique
-// //   name  String?
-// //   posts Post[]
-// // }
 // model User {
-//   id    Int     @id @default(autoincrement())
-//   email String? @unique
-//   name  String?
-//   posts Post[]
+//   id        String   @id           // Clerk user ID
+//   email     String?  @unique
+//   firstName String?
+//   lastName  String?
+//   todos     Todo[]
+// }
+
+// model Todo {
+//   id        Int      @id @default(autoincrement())
+//   text      String
+//   completed Boolean  @default(false)
+//   createdAt DateTime @default(now())
+//   userId    String
+//   user      User     @relation(fields: [userId], references: [id])
 // }
 
 
-// model Post {
-//   id        Int     @id @default(autoincrement())
-//   title     String
-//   content   String?
-//   published Boolean @default(false)
-//   authorId  Int
-//   author    User    @relation(fields: [authorId], references: [id])
-// }
 
-// // model Todo {
-// //   id        Int      @id @default(autoincrement())
-// //   text      String
-// //   completed Boolean  @default(false)   // new field
-// //   createdAt DateTime @default(now())
-// // }
+
+
+
+
 
 
 
@@ -54,17 +121,18 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String? @unique
-  name  String?
-  todos Todo[]
+  id        String   @id           // Clerk user ID
+  email     String?  @unique
+  firstName String?
+  lastName  String?
+  todos     Todo[]
 }
 
 model Todo {
   id        Int      @id @default(autoincrement())
-  text      String   // the task description
+  text      String
   completed Boolean  @default(false)
   createdAt DateTime @default(now())
-  userId    Int?
-  user      User?    @relation(fields: [userId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }

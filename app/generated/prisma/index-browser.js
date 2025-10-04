@@ -123,7 +123,8 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  name: 'name'
+  firstName: 'firstName',
+  lastName: 'lastName'
 };
 
 exports.Prisma.TodoScalarFieldEnum = {

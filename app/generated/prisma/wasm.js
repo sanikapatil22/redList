@@ -95,7 +95,8 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  name: 'name'
+  firstName: 'firstName',
+  lastName: 'lastName'
 };
 
 exports.Prisma.TodoScalarFieldEnum = {
@@ -165,6 +166,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -173,15 +175,22 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// generator client {\n//   provider = \"prisma-client-js\"\n//   output   = \"../app/generated/prisma\"\n// }\n\n// datasource db {\n//   provider = \"postgresql\"\n//   url      = env(\"DATABASE_URL\")\n// }\n\n// // model User {\n// //   id    Int     @id @default(autoincrement())\n// //   email String  @unique\n// //   name  String?\n// //   posts Post[]\n// // }\n// model User {\n//   id    Int     @id @default(autoincrement())\n//   email String? @unique\n//   name  String?\n//   posts Post[]\n// }\n\n// model Post {\n//   id        Int     @id @default(autoincrement())\n//   title     String\n//   content   String?\n//   published Boolean @default(false)\n//   authorId  Int\n//   author    User    @relation(fields: [authorId], references: [id])\n// }\n\n// // model Todo {\n// //   id        Int      @id @default(autoincrement())\n// //   text      String\n// //   completed Boolean  @default(false)   // new field\n// //   createdAt DateTime @default(now())\n// // }\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id    Int     @id @default(autoincrement())\n  email String? @unique\n  name  String?\n  todos Todo[]\n}\n\nmodel Todo {\n  id        Int      @id @default(autoincrement())\n  text      String // the task description\n  completed Boolean  @default(false)\n  createdAt DateTime @default(now())\n  userId    Int?\n  user      User?    @relation(fields: [userId], references: [id])\n}\n",
-  "inlineSchemaHash": "724ebf640c57b8279415f41d0cfbfaea8d075aae750a5a9583c159706f88cd57",
-  "copyEngine": false
+  "inlineSchema": "// // // generator client {\n// // //   provider = \"prisma-client-js\"\n// // //   output   = \"../app/generated/prisma\"\n// // // }\n\n// // // datasource db {\n// // //   provider = \"postgresql\"\n// // //   url      = env(\"DATABASE_URL\")\n// // // }\n\n// // // // model User {\n// // // //   id    Int     @id @default(autoincrement())\n// // // //   email String  @unique\n// // // //   name  String?\n// // // //   posts Post[]\n// // // // }\n// // // model User {\n// // //   id    Int     @id @default(autoincrement())\n// // //   email String? @unique\n// // //   name  String?\n// // //   posts Post[]\n// // // }\n\n// // // model Post {\n// // //   id        Int     @id @default(autoincrement())\n// // //   title     String\n// // //   content   String?\n// // //   published Boolean @default(false)\n// // //   authorId  Int\n// // //   author    User    @relation(fields: [authorId], references: [id])\n// // // }\n\n// // // // model Todo {\n// // // //   id        Int      @id @default(autoincrement())\n// // // //   text      String\n// // // //   completed Boolean  @default(false)   // new field\n// // // //   createdAt DateTime @default(now())\n// // // // }\n\n// // generator client {\n// //   provider = \"prisma-client-js\"\n// //   output   = \"../app/generated/prisma\"\n// // }\n\n// // datasource db {\n// //   provider = \"postgresql\"\n// //   url      = env(\"DATABASE_URL\")\n// // }\n\n// // model User {\n// //   id    Int     @id @default(autoincrement())\n// //   email String? @unique\n// //   name  String?\n// //   todos Todo[]\n// // }\n\n// // model Todo {\n// //   id        Int      @id @default(autoincrement())\n// //   text      String   // the task description\n// //   completed Boolean  @default(false)\n// //   createdAt DateTime @default(now())\n// //   userId    Int?\n// //   user      User?    @relation(fields: [userId], references: [id])\n// // }\n\n// generator client {\n//   provider = \"prisma-client-js\"\n//   output   = \"../app/generated/prisma\"\n// }\n\n// datasource db {\n//   provider = \"postgresql\"\n//   url      = env(\"DATABASE_URL\")\n// }\n\n// model User {\n//   id        String   @id           // Clerk user ID\n//   email     String?  @unique\n//   firstName String?\n//   lastName  String?\n//   todos     Todo[]\n// }\n\n// model Todo {\n//   id        Int      @id @default(autoincrement())\n//   text      String\n//   completed Boolean  @default(false)\n//   createdAt DateTime @default(now())\n//   userId    String\n//   user      User     @relation(fields: [userId], references: [id])\n// }\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String  @id // Clerk user ID\n  email     String? @unique\n  firstName String?\n  lastName  String?\n  todos     Todo[]\n}\n\nmodel Todo {\n  id        Int      @id @default(autoincrement())\n  text      String\n  completed Boolean  @default(false)\n  createdAt DateTime @default(now())\n  userId    String\n  user      User     @relation(fields: [userId], references: [id])\n}\n",
+  "inlineSchemaHash": "400a05f1a5ca1e5a5a06069949b2754d6231cb6427bf1dc4aa04d654a312b5e9",
+  "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"todos\",\"kind\":\"object\",\"type\":\"Todo\",\"relationName\":\"TodoToUser\"}],\"dbName\":null},\"Todo\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"text\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"completed\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"TodoToUser\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"todos\",\"kind\":\"object\",\"type\":\"Todo\",\"relationName\":\"TodoToUser\"}],\"dbName\":null},\"Todo\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"text\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"completed\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"TodoToUser\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
-config.engineWasm = undefined
+config.engineWasm = {
+  getRuntime: async () => require('./query_engine_bg.js'),
+  getQueryEngineWasmModule: async () => {
+    const loader = (await import('#wasm-engine-loader')).default
+    const engine = (await loader).default
+    return engine
+  }
+}
 config.compilerWasm = undefined
 
 config.injectableEdgeEnv = () => ({
